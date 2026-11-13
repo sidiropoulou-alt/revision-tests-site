@@ -1,37 +1,35 @@
-# Revision Tests 📚
+# Revision Tests — TDL Unit 1 "Who We Are"
 
 **Live site: <https://sidiropoulou-alt.github.io/revision-tests-site/>**
 
-Free practice tests for students. Open the link, pick a test, tap a question card
-to reveal the answer. No login, no app, nothing to install — works on phones,
-tablets and computers.
+English revision test for Grade 3, TDL Unit 1. Six topics (Culture, Traits, Life Cycles,
+Facts, Learner Profile, Challenge) with 42 questions — mostly True/False and Yes/No, plus a
+few funny 😄 trick questions. Tap a question card to reveal its answer. No login, no app;
+works on phones, tablets and computers.
 
-## The tests
+This repository holds **only** the published copy of that one site:
 
-| Test | Language | Content |
-|---|---|---|
-| **TDL Unit 1 – Who We Are** | English | Grade 3 · 6 topics (Culture, Traits, Life Cycles, Facts, Learner Profile, Challenge) · 42 questions · True/False and Yes/No, plus a few 😄 funny trick questions |
-| **Γεωγραφία Στ΄ Δημοτικού** | Ελληνικά | Ενότητα Α΄ – Η Γη ως ουράνιο σώμα · κεφάλαια 1–6 · 30 ερωτήσεις · πολλαπλής επιλογής, σωστό/λάθος, συμπλήρωση κενών, αντιστοίχιση, σύντομη απάντηση και 🧠 κριτική σκέψη |
+| File | What it is |
+| --- | --- |
+| `index.html` | The test chooser — **this is the page students open** |
+| `tdl.html` | The TDL Unit 1 test (self-contained: questions, styles and script are all inside) |
+| `.nojekyll` | Tells GitHub Pages to skip Jekyll processing |
 
-## Files
+## Publishing an update
 
-```
-index.html       home page linking both tests
-tdl.html         TDL Unit 1 review (English)  — self-contained
-geografia.html   Geography review (Greek)     — self-contained
-.nojekyll        tells GitHub Pages to serve the files as-is
-```
+From the private project repository:
 
-Every page carries its own CSS, JavaScript and question data, so there is no
-build step, no dependency and no request to any third-party server. The pages
-even work offline: save `tdl.html` or `geografia.html` and open it by
-double-clicking, or email the file to a student.
+1. `node build-site.js`
+2. copy `index.html` and `tdl.html` from the generated `revision-tests/` folder over the
+   files in this repository (or push that folder)
 
-## Hosting
+GitHub Pages rebuilds automatically, and the address above never changes.
 
-Published with **GitHub Pages** from the `main` branch root of this repository.
-To update the site, replace the HTML files and push — the address never changes.
-The question banks and build scripts live in a separate private repository.
+## What is not here
+
+The question bank (`data/quiz.json`), the build scripts and the source PDF live in a
+separate **private** repository, so they are not published here. This repository exists
+only to serve the finished page.
 
 ---
 
