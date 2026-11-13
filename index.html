@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Revision Tests · Τεστ Επανάληψης</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>" />
+<style>
+  :root { color-scheme: light; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh; padding: 2.5rem 1rem 3rem;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: linear-gradient(160deg, #eef6ff 0%, #f8f9fa 45%, #fff4e6 100%);
+    color: #212529; display: flex; flex-direction: column; align-items: center;
+  }
+  header { text-align: center; max-width: 46rem; margin-bottom: 2rem; }
+  h1 { font-size: clamp(1.6rem, 4vw, 2.4rem); margin: 0 0 .5rem; letter-spacing: -.02em; }
+  .lead { margin: 0; color: #495057; font-size: 1.02rem; line-height: 1.6; }
+  .grid { display: grid; gap: 1.25rem; width: 100%; max-width: 46rem; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); }
+  .card {
+    background: #fff; border: 1px solid #e9ecef; border-radius: 18px; padding: 1.5rem;
+    box-shadow: 0 6px 24px rgba(15, 23, 42, .07);
+    display: flex; flex-direction: column; gap: .6rem;
+    border-top: 5px solid var(--accent, #4c6ef5);
+    text-decoration: none; color: inherit;
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .card:hover, .card:focus-visible { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(15, 23, 42, .13); outline: none; }
+  .card .emoji { font-size: 2rem; line-height: 1; }
+  .card h2 { margin: .1rem 0 0; font-size: 1.15rem; }
+  .card .sub { color: #868e96; font-size: .85rem; margin: 0; }
+  .card .desc { color: #495057; font-size: .92rem; line-height: 1.55; margin: .15rem 0 .35rem; }
+  .meta { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: auto; }
+  .pill { font-size: .75rem; font-weight: 600; padding: .2rem .6rem; border-radius: 999px; background: #f1f3f5; color: #495057; }
+  .go { margin-top: .6rem; font-weight: 700; color: var(--accent, #4c6ef5); }
+  footer { margin-top: 2.5rem; text-align: center; color: #868e96; font-size: .85rem; max-width: 46rem; line-height: 1.6; }
+</style>
+</head>
+<body>
+  <header>
+    <h1>📚 Revision Tests</h1>
+    <p class="lead">
+      Pick a test, then tap any question card to reveal the answer.<br />
+      Διάλεξε ένα τεστ και πάτησε κάθε κάρτα για να δεις την απάντηση.
+    </p>
+  </header>
+
+  <div class="grid">
+    <a class="card" href="./tdl.html" style="--accent:#4c6ef5">
+      <span class="emoji" aria-hidden="true">🧠</span>
+      <h2>TDL Unit 1 – Who We Are</h2>
+      <p class="sub">Grade 3 · English</p>
+      <p class="desc">Culture, Traits, Life Cycles, Facts, Learner Profile and Challenge — with a few funny 😄 trick questions.</p>
+      <div class="meta">
+        <span class="pill">6 topics</span>
+        <span class="pill">42 questions</span>
+        <span class="pill">True/False &amp; Yes/No</span>
+      </div>
+      <span class="go">Start the review →</span>
+    </a>
+
+    <a class="card" href="./geografia.html" style="--accent:#1c7ed6">
+      <span class="emoji" aria-hidden="true">🌍</span>
+      <h2>Γεωγραφία Στ΄ Δημοτικού</h2>
+      <p class="sub">Ενότητα Α΄ – Η Γη ως ουράνιο σώμα · Ελληνικά</p>
+      <p class="desc">Επαναληπτικό τεστ στα κεφάλαια 1–6: σχήμα και κινήσεις της Γης, συντεταγμένες, μέρα και νύχτα, εποχές, ηλιακό σύστημα.</p>
+      <div class="meta">
+        <span class="pill">6 κεφάλαια</span>
+        <span class="pill">30 ερωτήσεις</span>
+        <span class="pill">🧠 κριτική σκέψη</span>
+      </div>
+      <span class="go">Ξεκίνα την επανάληψη →</span>
+    </a>
+  </div>
+
+  <footer>
+    <p>Works on phones, tablets and computers — no login, no app. 🌟<br />
+    Δουλεύει σε κινητό, tablet και υπολογιστή — χωρίς σύνδεση σε λογαριασμό.</p>
+  </footer>
+</body>
+</html>

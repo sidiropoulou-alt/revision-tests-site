@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TDL Unit 1 Review – Who We Are</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>" />
+  <style>
+:root {
+  --ink: #1b2333;
+  --muted: #5a6478;
+  --line: #e6e9f0;
+  --bg: #f4f6fb;
+  --card: #ffffff;
+  --accent: #3b5bdb;
+  --accent-soft: #edf0ff;
+  --shadow: 0 6px 20px rgba(27, 35, 51, 0.08);
+  --radius: 18px;
+  font-family: "Segoe UI", "Trebuchet MS", system-ui, -apple-system, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 18px;
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+}
+
+.wrap {
+  width: min(920px, 100% - 2rem);
+  margin-inline: auto;
+}
+
+/* ---------- Header ---------- */
+.site-header {
+  background: linear-gradient(135deg, #3b5bdb, #5f3dc4);
+  color: #fff;
+  padding: 1.1rem 0;
+}
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.brand { display: flex; align-items: center; gap: 0.75rem; }
+.brand-emoji { font-size: 2.1rem; line-height: 1; }
+.site-header h1 { margin: 0; font-size: 1.35rem; line-height: 1.15; }
+.subtitle { margin: 0.15rem 0 0; opacity: 0.9; font-size: 0.95rem; }
+.grade-badge {
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
+  padding: 0.35rem 0.9rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+/* ---------- Topic nav ---------- */
+.topic-nav {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: #fff;
+  border-bottom: 1px solid var(--line);
+  box-shadow: 0 2px 8px rgba(27, 35, 51, 0.05);
+}
+.topic-nav-inner {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding: 0.6rem 0;
+  scrollbar-width: thin;
+}
+.topic-tab {
+  border: 2px solid var(--line);
+  background: #fff;
+  color: var(--ink);
+  border-radius: 999px;
+  padding: 0.5rem 0.95rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: transform 0.12s ease, border-color 0.15s ease, background 0.15s ease;
+}
+.topic-tab:hover { transform: translateY(-1px); }
+.topic-tab[aria-current="true"] {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.topic-tab .dot {
+  width: 0.6rem; height: 0.6rem; border-radius: 50%;
+  background: var(--tab-color, var(--accent));
+  flex: none;
+}
+
+/* ---------- Main ---------- */
+.intro {
+  color: var(--muted);
+  font-size: 1rem;
+  margin: 1.25rem 0 0.5rem;
+}
+
+.topic-head {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 1.1rem 1.25rem;
+  box-shadow: var(--shadow);
+  border-left: 8px solid var(--accent);
+  margin: 1rem 0;
+}
+.topic-emoji { font-size: 2.4rem; line-height: 1; }
+.topic-head h2 { margin: 0; font-size: 1.6rem; }
+.topic-blurb { margin: 0.2rem 0 0; color: var(--muted); font-size: 0.98rem; }
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.85rem;
+}
+.counter { color: var(--muted); font-size: 0.92rem; font-weight: 600; }
+.toolbar-buttons { display: flex; gap: 0.5rem; }
+
+.btn {
+  border-radius: 999px;
+  padding: 0.5rem 1rem;
+  font-size: 0.92rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: 2px solid var(--accent);
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.btn-ghost { background: #fff; color: var(--accent); }
+.btn-ghost:hover { background: var(--accent-soft); }
+
+/* ---------- Question cards ---------- */
+.question-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.85rem;
+}
+
+.q-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  border: 2px solid transparent;
+  transition: border-color 0.15s ease;
+}
+.q-card.open { border-color: var(--accent); }
+
+.q-toggle {
+  all: unset;
+  display: flex;
+  gap: 0.9rem;
+  align-items: flex-start;
+  width: 100%;
+  padding: 1.05rem 1.15rem;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+}
+.q-toggle:focus-visible { outline: 3px solid var(--accent); outline-offset: -3px; }
+
+.q-number {
+  flex: none;
+  width: 2rem; height: 2rem;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 800;
+  display: grid;
+  place-items: center;
+  font-size: 0.95rem;
+}
+
+.q-body { flex: 1; }
+.q-badges { display: flex; gap: 0.4rem; margin-bottom: 0.35rem; flex-wrap: wrap; }
+.badge {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  padding: 0.2rem 0.6rem;
+}
+.badge-tf { background: #e7f5ff; color: #1971c2; }
+.badge-yn { background: #fff0f6; color: #c2255c; }
+.badge-fun { background: #fff9db; color: #e67700; }
+
+.q-prompt { font-size: 1.06rem; font-weight: 600; }
+.q-hint { color: var(--muted); font-size: 0.82rem; margin-top: 0.4rem; }
+
+.q-chevron {
+  flex: none;
+  color: var(--muted);
+  font-size: 1.1rem;
+  transition: transform 0.2s ease;
+}
+.q-card.open .q-chevron { transform: rotate(180deg); }
+
+.q-answer {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.25s ease;
+}
+.q-card.open .q-answer { grid-template-rows: 1fr; }
+.q-answer-inner {
+  overflow: hidden;
+  padding: 0 1.15rem;
+}
+.q-answer-inner > div { padding-bottom: 1.15rem; }
+.answer-pill {
+  display: inline-block;
+  font-weight: 800;
+  font-size: 1.05rem;
+  border-radius: 12px;
+  padding: 0.35rem 0.9rem;
+  margin-bottom: 0.5rem;
+}
+.answer-pill.ans-true, .answer-pill.ans-yes { background: #ebfbee; color: #2b8a3e; }
+.answer-pill.ans-false, .answer-pill.ans-no { background: #fff5f5; color: #c92a2a; }
+.q-explanation { color: var(--ink); font-size: 0.98rem; margin: 0; }
+
+/* ---------- Footer ---------- */
+.site-footer {
+  margin-top: 2rem;
+  padding: 1.5rem 0 2.5rem;
+  color: var(--muted);
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 520px) {
+  body { font-size: 17px; }
+  .site-header h1 { font-size: 1.15rem; }
+  .topic-head h2 { font-size: 1.35rem; }
+  .q-prompt { font-size: 1rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
+
+</style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <div class="brand">
+        <span class="brand-emoji" aria-hidden="true">🧠</span>
+        <div>
+          <h1 id="unit-title">TDL Unit 1 Review</h1>
+          <p class="subtitle" id="unit-subtitle">Who We Are</p>
+        </div>
+      </div>
+      <span class="grade-badge" id="grade-badge">Grade 3</span>
+    </div>
+  </header>
+
+  <nav class="topic-nav" aria-label="Topics">
+    <div class="wrap topic-nav-inner" id="topic-nav"></div>
+  </nav>
+
+  <main class="wrap" id="main">
+    <p class="intro" id="intro"></p>
+
+    <section class="topic-panel" id="topic-panel" aria-live="polite">
+      <div class="topic-head">
+        <span class="topic-emoji" id="topic-emoji" aria-hidden="true">🌍</span>
+        <div>
+          <h2 id="topic-title">Culture</h2>
+          <p id="topic-blurb" class="topic-blurb"></p>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <span class="counter" id="counter"></span>
+        <div class="toolbar-buttons">
+          <button type="button" class="btn btn-ghost" id="reveal-all">Reveal all</button>
+          <button type="button" class="btn btn-ghost" id="hide-all">Hide all</button>
+        </div>
+      </div>
+
+      <ol class="question-list" id="question-list"></ol>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Tap any question card to reveal the answer. Good luck with your review! 🌟</p>
+    </div>
+    <p style="margin-top:.6rem"><a href="./index.html" style="display:inline-block;padding:.35rem .9rem;border-radius:999px;background:#fff;border:1px solid #dee2e6;color:#495057;font-weight:600;font-size:.85rem;text-decoration:none">← Αρχική / All tests</a></p>
+</footer>
+
+  <script>
+window.__QUIZ__ = {"unit":"TDL Unit 1 – Who We Are","grade":"Grade 3","subtitle":"Weekend Review Challenge","intro":"Pick a topic, read each question, then tap the card to reveal the answer. Watch out for the 😄 funny ones — they are trickier than they look!","topics":[{"id":"culture","title":"Culture","emoji":"🌍","color":"#e8590c","blurb":"Culture is the way groups of people live, share and celebrate together.","questions":[{"id":"culture-1","type":"truefalse","prompt":"Culture is only about the food people eat.","answer":"False","explanation":"Culture is much bigger than food! It also includes language, music, art, clothing, beliefs, traditions and celebrations."},{"id":"culture-2","type":"yesno","prompt":"Are grasshoppers part of culture?","answer":"No","fun":true,"explanation":"Nope! A grasshopper is an animal, not part of a culture. It belongs in our Life Cycles and Traits topics. Culture is about the way people live and share."},{"id":"culture-3","type":"truefalse","prompt":"Everyone who lives in the same country has exactly the same culture.","answer":"False","explanation":"People in one country share many things, but different families and communities still have their own languages, foods, religions and traditions."},{"id":"culture-4","type":"truefalse","prompt":"A person can belong to more than one culture at the same time.","answer":"True","explanation":"Yes — you could share your family's culture at home, your school's culture in class, and a culture that comes from your family's heritage."},{"id":"culture-5","type":"truefalse","prompt":"Traditions are things a family or group does again and again.","answer":"True","explanation":"A tradition is something people repeat, like a special meal, a song or a celebration."},{"id":"culture-6","type":"truefalse","prompt":"If you move to a new country, you lose your first culture forever.","answer":"False","explanation":"You can keep your first culture and also learn about new ones. Cultures can mix and grow together."},{"id":"culture-7","type":"truefalse","prompt":"Learning a few words in a friend's language is one way to show respect for their culture.","answer":"True","explanation":"Yes! Small actions like learning a greeting or asking about a tradition show that you care and want to include them."}]},{"id":"traits","title":"Traits","emoji":"🧬","color":"#2f9e44","blurb":"Some things we are born with, and some things we learn. Can you tell the difference?","questions":[{"id":"traits-1","type":"truefalse","prompt":"Inherited traits come from your parents.","answer":"True","explanation":"Inherited traits are passed down from parents to their children — like eye colour or hair colour."},{"id":"traits-2","type":"truefalse","prompt":"Riding a bicycle is an inherited trait.","answer":"False","explanation":"Riding a bike is a learned behaviour. You practise and learn how to do it."},{"id":"traits-3","type":"truefalse","prompt":"Instinct is a behaviour an animal knows without being taught.","answer":"True","explanation":"An instinct is behaviour that living things are born knowing how to do."},{"id":"traits-4","type":"truefalse","prompt":"Environmental traits are caused by the place a living thing lives and the conditions around it.","answer":"True","explanation":"Environmental traits come from the environment — like food, water, sunlight or space. For example, a plant kept in the shade may grow tall and thin trying to reach the light."},{"id":"traits-5","type":"yesno","prompt":"Could a puppy be born already knowing how to fetch a ball?","answer":"No","fun":true,"explanation":"No! Fetching is not an instinct — a puppy has to learn it and practise. Instincts are more like chewing, digging or herding."},{"id":"traits-6","type":"truefalse","prompt":"A bird building a nest is a learned behaviour.","answer":"False","explanation":"For most birds, building a nest is an instinct — they know how to do it without being taught."},{"id":"traits-7","type":"truefalse","prompt":"You can learn a new language, but you cannot learn a new blood type.","answer":"True","fun":true,"explanation":"True! A language is a learned behaviour you practise. Your blood type is an inherited trait you are born with — you can't learn or change it."}]},{"id":"life-cycles","title":"Life Cycles","emoji":"🦋","color":"#1c7ed6","blurb":"Every living thing grows and changes. Let's look at frogs, butterflies and grasshoppers.","questions":[{"id":"life-cycles-1","type":"truefalse","prompt":"A butterfly goes through metamorphosis.","answer":"True","explanation":"Metamorphosis is a big change in body form. A butterfly changes egg → caterpillar → pupa (chrysalis) → adult."},{"id":"life-cycles-2","type":"truefalse","prompt":"A frog begins its life as a tadpole.","answer":"True","explanation":"A frog's life cycle is egg → tadpole → froglet → adult frog."},{"id":"life-cycles-3","type":"truefalse","prompt":"A grasshopper's life cycle has a pupa stage, just like a butterfly.","answer":"False","explanation":"A grasshopper hatches as a nymph and grows bigger in small steps. It does NOT have a pupa stage."},{"id":"life-cycles-4","type":"yesno","prompt":"If you take very good care of a puppy, will it grow into a butterfly?","answer":"No","fun":true,"explanation":"Ha! No — a puppy is a mammal, and it will grow into an adult dog. Only insects like butterflies go through metamorphosis to become a butterfly."},{"id":"life-cycles-5","type":"truefalse","prompt":"A life cycle is the stages a living thing goes through as it grows and changes.","answer":"True","explanation":"Every living thing has a life cycle — the order of stages from birth to adult."},{"id":"life-cycles-6","type":"truefalse","prompt":"A tadpole breathes using gills, but an adult frog breathes using lungs.","answer":"True","explanation":"Yes. Tadpoles live in water and use gills. As frogs grow, they develop lungs and can live on land too."},{"id":"life-cycles-7","type":"yesno","prompt":"Do all animals have exactly the same life cycle?","answer":"No","explanation":"No. Frogs, butterflies and grasshoppers all change in different ways, and mammals like dogs look similar as they grow."}]},{"id":"facts","title":"Facts","emoji":"🔎","color":"#7048e8","blurb":"Cool facts from our unit. How many did you remember?","questions":[{"id":"facts-1","type":"truefalse","prompt":"Heredity is the passing of traits from parents to their offspring.","answer":"True","explanation":"Heredity is how traits like eye colour are passed from parents to children."},{"id":"facts-2","type":"truefalse","prompt":"Some animals change a lot as they grow, and some change only a little.","answer":"True","explanation":"Frogs and butterflies change a lot (metamorphosis). Other animals, like dogs, look similar as they grow."},{"id":"facts-3","type":"truefalse","prompt":"Penguins can fly.","answer":"False","fun":true,"explanation":"Penguins are birds, but they cannot fly. They are amazing swimmers instead!"},{"id":"facts-4","type":"yesno","prompt":"Does a butterfly taste its food with its feet?","answer":"Yes","fun":true,"explanation":"True and amazing! Butterflies have taste sensors on their feet. They stand on a leaf to 'taste' whether it is good food."},{"id":"facts-5","type":"truefalse","prompt":"All baby animals look exactly like their parents the moment they are born.","answer":"False","explanation":"Not at all! A tadpole looks nothing like an adult frog, and a caterpillar looks nothing like a butterfly."},{"id":"facts-6","type":"truefalse","prompt":"Some animals, like starfish, can grow back a lost arm.","answer":"True","explanation":"Yes — this is called regeneration. A starfish can regrow an arm, and some can even grow a whole new body from one arm!"},{"id":"facts-7","type":"truefalse","prompt":"Learned behaviours are things you are taught or that you practise.","answer":"True","explanation":"Reading, speaking a language and riding a bike are all learned behaviours."}]},{"id":"learner-profile","title":"Learner Profile","emoji":"⭐","color":"#e64980","blurb":"How do good learners act? Let's check our learner profile words.","questions":[{"id":"learner-profile-1","type":"truefalse","prompt":"An 'inquirer' is curious and likes to ask questions.","answer":"True","explanation":"Inquirers want to find out more and love asking 'why' and 'how'."},{"id":"learner-profile-2","type":"truefalse","prompt":"A 'caring' learner likes to help other people.","answer":"True","explanation":"Caring learners show kindness and want to make things better for others."},{"id":"learner-profile-3","type":"truefalse","prompt":"'Open-minded' means you refuse to listen to other people's ideas.","answer":"False","explanation":"Open-minded learners listen to and respect other people's ideas, even when they are different from their own."},{"id":"learner-profile-4","type":"truefalse","prompt":"A 'principled' learner does what is right, even when it is hard.","answer":"True","explanation":"Principled learners are honest and fair, and they do the right thing."},{"id":"learner-profile-5","type":"yesno","prompt":"Does a 'risk-taker' learner give up the moment something is hard?","answer":"No","fun":true,"explanation":"No way! A risk-taker (also called 'courageous') keeps trying new things and does not give up, even when it is tricky."},{"id":"learner-profile-6","type":"truefalse","prompt":"A 'communicator' only tells jokes and never listens to anyone.","answer":"False","fun":true,"explanation":"A communicator shares ideas clearly — and listens carefully to others too. Jokes are just a bonus!"},{"id":"learner-profile-7","type":"yesno","prompt":"Does a 'balanced' learner eat only sweets and never sleep?","answer":"No","fun":true,"explanation":"No! A balanced learner looks after their mind, body and feelings — with time for learning, playing, healthy food and rest."}]},{"id":"challenge","title":"Challenge","emoji":"💡","color":"#f08c00","blurb":"Think like a detective! Try each challenge question before you peek at the answer.","questions":[{"id":"challenge-1","type":"yesno","prompt":"Could you tell for sure whether a behaviour is an instinct or learned by watching an animal just one time?","answer":"No","explanation":"One quick look is not enough. Scientists watch animals carefully, many times, and see whether the behaviour has to be taught."},{"id":"challenge-2","type":"yesno","prompt":"If a new classmate joins from another country, is giving them a big hug right away always the best welcome?","answer":"No","fun":true,"explanation":"Not always! People from different cultures greet in different ways — a wave, a nod or a handshake may be better. Ask first and be respectful."},{"id":"challenge-3","type":"truefalse","prompt":"Instinct is something an animal must be taught by its parents.","answer":"False","explanation":"Instinct is NOT taught — animals are born knowing how to do it. A learned behaviour is the one that must be taught or practised."},{"id":"challenge-4","type":"truefalse","prompt":"If a plant is not growing well, doing nothing and waiting is the best solution.","answer":"False","explanation":"Good problem solvers investigate what might be wrong and try a solution, such as giving more water or moving it to more light."},{"id":"challenge-5","type":"yesno","prompt":"If a grasshopper moved to a new country, would it need to learn the local culture?","answer":"No","fun":true,"explanation":"Nope! Culture belongs to people. A grasshopper would just carry on hopping — but a person who moves might enjoy learning about a new culture."},{"id":"challenge-6","type":"truefalse","prompt":"Culture belongs to a group of people, like a family or a country.","answer":"True","explanation":"Yes. Culture is shared by a group — a family, community or country — and passed on to others."},{"id":"challenge-7","type":"yesno","prompt":"If a seed is planted in the dark and never watered, will it probably grow into a healthy plant?","answer":"No","explanation":"No. Plants need light, water and air. A plant without these has poor environmental conditions and will struggle to grow."}]}]};
+</script>
+<script>
+/* TDL Unit 1 review - front-end logic.
+   Loads the question bank from the API (/api/quiz), or from an embedded copy
+   in window.__QUIZ__ when this file is used in the self-contained build. */
+
+(function () {
+  "use strict";
+
+  var TYPE_LABEL = { truefalse: "True or False", yesno: "Yes or No" };
+
+  async function loadQuiz() {
+    if (window.__QUIZ__) return window.__QUIZ__;
+    var res = await fetch("/api/quiz", { headers: { Accept: "application/json" } });
+    if (!res.ok) throw new Error("API responded with " + res.status);
+    return res.json();
+  }
+
+  function el(tag, className, text) {
+    var node = document.createElement(tag);
+    if (className) node.className = className;
+    if (text != null) node.textContent = text;
+    return node;
+  }
+
+  function answerClass(answer) {
+    return "answer-pill ans-" + String(answer).toLowerCase();
+  }
+
+  var state = { quiz: null, currentId: null };
+
+  function renderHeader(quiz) {
+    if (quiz.unit) document.getElementById("unit-title").textContent = quiz.unit + " Review";
+    if (quiz.subtitle) document.getElementById("unit-subtitle").textContent = quiz.subtitle;
+    if (quiz.grade) document.getElementById("grade-badge").textContent = quiz.grade;
+    if (quiz.intro) document.getElementById("intro").textContent = quiz.intro;
+    document.title = (quiz.unit || "TDL Unit 1") + " Review";
+  }
+
+  function renderNav() {
+    var nav = document.getElementById("topic-nav");
+    nav.textContent = "";
+    state.quiz.topics.forEach(function (topic) {
+      var btn = el("button", "topic-tab");
+      btn.type = "button";
+      btn.style.setProperty("--tab-color", topic.color || "#3b5bdb");
+      btn.appendChild(el("span", "dot"));
+      btn.appendChild(document.createTextNode(topic.emoji + "  " + topic.title));
+      btn.addEventListener("click", function () { selectTopic(topic.id); });
+      nav.appendChild(btn);
+    });
+  }
+
+  function buildCard(topic, question, index) {
+    var li = el("li", "q-card");
+    li.dataset.id = question.id;
+
+    var toggle = el("button", "q-toggle");
+    toggle.type = "button";
+    toggle.setAttribute("aria-expanded", "false");
+
+    toggle.appendChild(el("span", "q-number", String(index + 1)));
+
+    var body = el("div", "q-body");
+    var badges = el("div", "q-badges");
+    var badge = el("span", "badge " + (question.type === "yesno" ? "badge-yn" : "badge-tf"),
+      TYPE_LABEL[question.type] || "Question");
+    badges.appendChild(badge);
+    if (question.fun) {
+      badges.appendChild(el("span", "badge badge-fun", "😄 Funny one!"));
+    }
+    body.appendChild(badges);
+    body.appendChild(el("div", "q-prompt", question.prompt));
+    body.appendChild(el("div", "q-hint", "Tap to reveal the answer"));
+    toggle.appendChild(body);
+    toggle.appendChild(el("span", "q-chevron", "\u25be"));
+
+    var answerWrap = el("div", "q-answer");
+    var inner = el("div", "q-answer-inner");
+    var box = el("div");
+    box.appendChild(el("span", answerClass(question.answer), question.answer));
+    if (question.explanation) box.appendChild(el("p", "q-explanation", question.explanation));
+    inner.appendChild(box);
+    answerWrap.appendChild(inner);
+
+    function setOpen(open) {
+      li.classList.toggle("open", open);
+      toggle.setAttribute("aria-expanded", open ? "true" : "false");
+      updateCounter();
+    }
+    toggle.addEventListener("click", function () { setOpen(!li.classList.contains("open")); });
+
+    li.appendChild(toggle);
+    li.appendChild(answerWrap);
+    li._setOpen = setOpen;
+    return li;
+  }
+
+  function updateCounter() {
+    var cards = document.querySelectorAll("#question-list .q-card");
+    var open = document.querySelectorAll("#question-list .q-card.open").length;
+    document.getElementById("counter").textContent =
+      cards.length + " questions \u00b7 " + open + " revealed";
+  }
+
+  function renderTopic(topic) {
+    var panel = document.getElementById("topic-panel");
+    panel.style.setProperty("--accent", topic.color || "#3b5bdb");
+    panel.querySelector(".topic-head").style.borderLeftColor = topic.color || "#3b5bdb";
+    document.getElementById("topic-emoji").textContent = topic.emoji || "";
+    document.getElementById("topic-title").textContent = topic.title;
+    document.getElementById("topic-blurb").textContent = topic.blurb || "";
+
+    var list = document.getElementById("question-list");
+    list.textContent = "";
+    topic.questions.forEach(function (q, i) { list.appendChild(buildCard(topic, q, i)); });
+    updateCounter();
+  }
+
+  function setActiveTab(id) {
+    document.querySelectorAll(".topic-tab").forEach(function (tab, i) {
+      tab.setAttribute("aria-current", state.quiz.topics[i].id === id ? "true" : "false");
+    });
+  }
+
+  function selectTopic(id, opts) {
+    var topic = state.quiz.topics.find(function (t) { return t.id === id; }) || state.quiz.topics[0];
+    state.currentId = topic.id;
+    renderTopic(topic);
+    setActiveTab(topic.id);
+    if (!opts || !opts.keepScroll) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+    if (history.replaceState) history.replaceState(null, "", "#" + topic.id);
+  }
+
+  function wireToolbar() {
+    document.getElementById("reveal-all").addEventListener("click", function () {
+      document.querySelectorAll("#question-list .q-card").forEach(function (card) {
+        card.classList.add("open");
+        card.querySelector(".q-toggle").setAttribute("aria-expanded", "true");
+      });
+      updateCounter();
+    });
+    document.getElementById("hide-all").addEventListener("click", function () {
+      document.querySelectorAll("#question-list .q-card").forEach(function (card) {
+        card.classList.remove("open");
+        card.querySelector(".q-toggle").setAttribute("aria-expanded", "false");
+      });
+      updateCounter();
+    });
+  }
+
+  async function init() {
+    try {
+      state.quiz = await loadQuiz();
+    } catch (err) {
+      document.getElementById("intro").textContent =
+        "Sorry, the questions could not be loaded. Please refresh the page.";
+      console.error(err);
+      return;
+    }
+    renderHeader(state.quiz);
+    renderNav();
+    wireToolbar();
+    var startId = (location.hash || "").replace("#", "") || state.quiz.topics[0].id;
+    selectTopic(startId, { keepScroll: true });
+  }
+
+  document.addEventListener("DOMContentLoaded", init);
+})();
+
+</script>
+</body>
+</html>

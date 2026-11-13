@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Επαναληπτικό Τεστ – Γεωγραφία Στ΄ Δημοτικού</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌍</text></svg>" />
+  <style>
+:root {
+  --ink: #1b2333;
+  --muted: #5a6478;
+  --line: #e6e9f0;
+  --bg: #f4f6fb;
+  --card: #ffffff;
+  --accent: #3b5bdb;
+  --accent-soft: #edf0ff;
+  --shadow: 0 6px 20px rgba(27, 35, 51, 0.08);
+  --radius: 18px;
+  font-family: "Segoe UI", "Trebuchet MS", system-ui, -apple-system, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 18px;
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+}
+
+.wrap {
+  width: min(920px, 100% - 2rem);
+  margin-inline: auto;
+}
+
+/* ---------- Header ---------- */
+.site-header {
+  background: linear-gradient(135deg, #3b5bdb, #5f3dc4);
+  color: #fff;
+  padding: 1.1rem 0;
+}
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.brand { display: flex; align-items: center; gap: 0.75rem; }
+.brand-emoji { font-size: 2.1rem; line-height: 1; }
+.site-header h1 { margin: 0; font-size: 1.35rem; line-height: 1.15; }
+.subtitle { margin: 0.15rem 0 0; opacity: 0.9; font-size: 0.95rem; }
+.grade-badge {
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
+  padding: 0.35rem 0.9rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+/* ---------- Topic nav ---------- */
+.topic-nav {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: #fff;
+  border-bottom: 1px solid var(--line);
+  box-shadow: 0 2px 8px rgba(27, 35, 51, 0.05);
+}
+.topic-nav-inner {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding: 0.6rem 0;
+  scrollbar-width: thin;
+}
+.topic-tab {
+  border: 2px solid var(--line);
+  background: #fff;
+  color: var(--ink);
+  border-radius: 999px;
+  padding: 0.5rem 0.95rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: transform 0.12s ease, border-color 0.15s ease, background 0.15s ease;
+}
+.topic-tab:hover { transform: translateY(-1px); }
+.topic-tab[aria-current="true"] {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.topic-tab .dot {
+  width: 0.6rem; height: 0.6rem; border-radius: 50%;
+  background: var(--tab-color, var(--accent));
+  flex: none;
+}
+
+/* ---------- Main ---------- */
+.intro {
+  color: var(--muted);
+  font-size: 1rem;
+  margin: 1.25rem 0 0.5rem;
+}
+
+.topic-head {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 1.1rem 1.25rem;
+  box-shadow: var(--shadow);
+  border-left: 8px solid var(--accent);
+  margin: 1rem 0;
+}
+.topic-emoji { font-size: 2.4rem; line-height: 1; }
+.topic-head h2 { margin: 0; font-size: 1.6rem; }
+.topic-blurb { margin: 0.2rem 0 0; color: var(--muted); font-size: 0.98rem; }
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.85rem;
+}
+.counter { color: var(--muted); font-size: 0.92rem; font-weight: 600; }
+.toolbar-buttons { display: flex; gap: 0.5rem; }
+
+.btn {
+  border-radius: 999px;
+  padding: 0.5rem 1rem;
+  font-size: 0.92rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: 2px solid var(--accent);
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.btn-ghost { background: #fff; color: var(--accent); }
+.btn-ghost:hover { background: var(--accent-soft); }
+
+/* ---------- Question cards ---------- */
+.question-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.85rem;
+}
+
+.q-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  border: 2px solid transparent;
+  transition: border-color 0.15s ease;
+}
+.q-card.open { border-color: var(--accent); }
+
+.q-toggle {
+  all: unset;
+  display: flex;
+  gap: 0.9rem;
+  align-items: flex-start;
+  width: 100%;
+  padding: 1.05rem 1.15rem;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+}
+.q-toggle:focus-visible { outline: 3px solid var(--accent); outline-offset: -3px; }
+
+.q-number {
+  flex: none;
+  width: 2rem; height: 2rem;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 800;
+  display: grid;
+  place-items: center;
+  font-size: 0.95rem;
+}
+
+.q-body { flex: 1; }
+.q-badges { display: flex; gap: 0.4rem; margin-bottom: 0.35rem; flex-wrap: wrap; }
+.badge {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  padding: 0.2rem 0.6rem;
+}
+.badge-tf { background: #e7f5ff; color: #1971c2; }
+.badge-yn { background: #fff0f6; color: #c2255c; }
+.badge-fun { background: #fff9db; color: #e67700; }
+
+.q-prompt { font-size: 1.06rem; font-weight: 600; }
+.q-hint { color: var(--muted); font-size: 0.82rem; margin-top: 0.4rem; }
+
+.q-chevron {
+  flex: none;
+  color: var(--muted);
+  font-size: 1.1rem;
+  transition: transform 0.2s ease;
+}
+.q-card.open .q-chevron { transform: rotate(180deg); }
+
+.q-answer {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.25s ease;
+}
+.q-card.open .q-answer { grid-template-rows: 1fr; }
+.q-answer-inner {
+  overflow: hidden;
+  padding: 0 1.15rem;
+}
+.q-answer-inner > div { padding-bottom: 1.15rem; }
+.answer-pill {
+  display: inline-block;
+  font-weight: 800;
+  font-size: 1.05rem;
+  border-radius: 12px;
+  padding: 0.35rem 0.9rem;
+  margin-bottom: 0.5rem;
+}
+.answer-pill.ans-true, .answer-pill.ans-yes { background: #ebfbee; color: #2b8a3e; }
+.answer-pill.ans-false, .answer-pill.ans-no { background: #fff5f5; color: #c92a2a; }
+.q-explanation { color: var(--ink); font-size: 0.98rem; margin: 0; }
+
+/* ---------- Footer ---------- */
+.site-footer {
+  margin-top: 2rem;
+  padding: 1.5rem 0 2.5rem;
+  color: var(--muted);
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 520px) {
+  body { font-size: 17px; }
+  .site-header h1 { font-size: 1.15rem; }
+  .topic-head h2 { font-size: 1.35rem; }
+  .q-prompt { font-size: 1rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
+
+/* ---------- Geography build: extra question-type styles ---------- */
+.badge-mc { background: #e7f5ff; color: #1971c2; }
+.badge-fill { background: #f3f0ff; color: #6741d9; }
+.badge-match { background: #e6fcf5; color: #0ca678; }
+.badge-short { background: #fff4e6; color: #e8590c; }
+.badge-think { background: #fff0f6; color: #c2255c; }
+
+.answer-pill.ans-true, .answer-pill.ans-yes, .answer-pill.ans-correct {
+  background: #ebfbee; color: #2b8a3e;
+}
+.answer-pill.ans-false, .answer-pill.ans-no {
+  background: #fff5f5; color: #c92a2a;
+}
+
+.ans-list { margin: 0.35rem 0 0; padding-left: 1.4rem; }
+.ans-list li { margin: 0.3rem 0; }
+.ans-list li::marker { font-weight: 800; color: var(--accent); }
+
+.match-pair {
+  display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: baseline;
+  margin: 0.35rem 0;
+}
+.match-pair .tag {
+  font-size: 0.7rem; font-weight: 800; letter-spacing: 0.02em;
+  text-transform: uppercase; border-radius: 999px; padding: 0.15rem 0.55rem;
+}
+.match-pair .tag-a { background: #e7f5ff; color: #1971c2; }
+.match-pair .tag-b { background: #e6fcf5; color: #0ca678; }
+.match-pair .arrow { color: var(--muted); font-weight: 800; }
+.ans-text { font-weight: 600; margin: 0 0 0.5rem; }
+.ans-content { padding-top: 0.1rem; }
+
+</style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <div class="brand">
+        <span class="brand-emoji" aria-hidden="true">🌍</span>
+        <div>
+          <h1 id="unit-title">Γεωγραφία Στ΄ Δημοτικού</h1>
+          <p class="subtitle" id="unit-subtitle">Ενότητα Α΄ – Η Γη ως ουράνιο σώμα</p>
+        </div>
+      </div>
+      <span class="grade-badge" id="grade-badge">Στ΄ Δημοτικού</span>
+    </div>
+  </header>
+
+  <nav class="topic-nav" aria-label="Κεφάλαια">
+    <div class="wrap topic-nav-inner" id="topic-nav"></div>
+  </nav>
+
+  <main class="wrap" id="main">
+    <p class="intro" id="intro"></p>
+
+    <section class="topic-panel" id="topic-panel" aria-live="polite">
+      <div class="topic-head">
+        <span class="topic-emoji" id="topic-emoji" aria-hidden="true">🌍</span>
+        <div>
+          <h2 id="topic-title">Κεφάλαιο 1</h2>
+          <p id="topic-blurb" class="topic-blurb"></p>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <span class="counter" id="counter"></span>
+        <div class="toolbar-buttons">
+          <button type="button" class="btn btn-ghost" id="reveal-all">Δείξε όλες</button>
+          <button type="button" class="btn btn-ghost" id="hide-all">Κρύψε όλες</button>
+        </div>
+      </div>
+
+      <ol class="question-list" id="question-list"></ol>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Πάτησε κάθε κάρτα για να δεις την απάντηση. Καλή επανάληψη! 🌟</p>
+    </div>
+    <p style="margin-top:.6rem"><a href="./index.html" style="display:inline-block;padding:.35rem .9rem;border-radius:999px;background:#fff;border:1px solid #dee2e6;color:#495057;font-weight:600;font-size:.85rem;text-decoration:none">← Αρχική / All tests</a></p>
+</footer>
+
+  <script>window.__GEO__ = {"unit":"Γεωγραφία Στ΄ Δημοτικού","grade":"Στ΄ Δημοτικού","subtitle":"Ενότητα Α΄ – Η Γη ως ουράνιο σώμα","intro":"Επαναληπτικό τεστ 30 ερωτήσεων στα κεφάλαια 1–6. Διάλεξε κεφάλαιο, διάβασε την ερώτηση και πάτησε την κάρτα για να δεις την απάντηση. Οι ερωτήσεις με το σήμα 🧠 θέλουν κριτική σκέψη!","topics":[{"id":"k1","title":"Κεφ. 1 – Σχήμα & κινήσεις της Γης","emoji":"🌍","color":"#1c7ed6","blurb":"Το γεωειδές σχήμα της Γης, η περιστροφή, η περιφορά και το δίσεκτο έτος.","questions":[{"id":"k1-q1","type":"mc","prompt":"Τι σχήμα έχει η Γη;","options":["Μια τέλεια σφαίρα","Ένα γεωειδές (ελαφρά πεπλατυσμένη στους πόλους)","Έναν κύβο"],"answer":"Ένα γεωειδές (ελαφρά πεπλατυσμένη στους πόλους)","explanation":"Το σχήμα της Γης λέγεται γεωειδές: είναι ελαφρά συμπιεσμένη στις κορυφές (πόλους) και διογκωμένη στη μέση (Ισημερινό)."},{"id":"k1-q2","type":"tf","prompt":"Η περιστροφή της Γης γύρω από τον άξονά της διαρκεί 24 ώρες.","answer":"Σωστό","explanation":"Με την περιστροφή ολοκληρώνεται ένα ημερονύχθιο, δηλαδή 24 ώρες."},{"id":"k1-q3","type":"tf","prompt":"Η κίνηση της Γης γύρω από τον Ήλιο ονομάζεται περιστροφή.","answer":"Λάθος","explanation":"Η κίνηση γύρω από τον Ήλιο λέγεται περιφορά. Περιστροφή είναι η κίνηση γύρω από τον άξονα της Γης."},{"id":"k1-q4","type":"short","prompt":"Τι ονομάζεται περιφορά της Γης και πόσο διαρκεί μια πλήρης περιφορά;","answer":"Περιφορά είναι η κίνηση της Γης γύρω από τον Ήλιο. Διαρκεί 365 ημέρες και 6 ώρες.","explanation":"Επειδή «περισσεύουν» 6 ώρες κάθε χρόνο, κάθε 4 χρόνια έχουμε δίσεκτο έτος."},{"id":"k1-q5","type":"think","prompt":"Γιατί κάθε 4 χρόνια έχουμε ένα δίσεκτο έτος με 29 Φεβρουαρίου;","answer":"Η περιφορά της Γης διαρκεί 365 ημέρες και 6 ώρες. Οι 6 ώρες που περισσεύουν κάθε χρόνο, σε 4 χρόνια γίνονται 6 × 4 = 24 ώρες, δηλαδή μία ολόκληρη μέρα. Αυτή την προσθέτουμε στις 29 Φεβρουαρίου.","explanation":"Έτσι το ημερολόγιο συμφωνεί με την πραγματική κίνηση της Γης."}]},{"id":"k2","title":"Κεφ. 2 – Πόλοι, Ισημερινός, μεσημβρινοί","emoji":"🧭","color":"#2f9e44","blurb":"Οι πόλοι, ο Ισημερινός, οι παράλληλοι κύκλοι και οι μεσημβρινοί.","questions":[{"id":"k2-q1","type":"mc","prompt":"Ποιος είναι ο μεγαλύτερος παράλληλος κύκλος της Γης;","options":["Ο Πρώτος Μεσημβρινός","Ο Ισημερινός","Ο άξονας της Γης"],"answer":"Ο Ισημερινός","explanation":"Ο Ισημερινός είναι ο μεγαλύτερος παράλληλος κύκλος και χωρίζει τη Γη σε βόρειο και νότιο ημισφαίριο."},{"id":"k2-q2","type":"tf","prompt":"Οι παράλληλοι κύκλοι ενώνουν τους δύο πόλους της Γης.","answer":"Λάθος","explanation":"Τους δύο πόλους τους ενώνουν οι μεσημβρινοί (ημικύκλια). Οι παράλληλοι κύκλοι είναι παράλληλοι με τον Ισημερινό."},{"id":"k2-q3","type":"match","prompt":"Αντιστοίχισε κάθε στοιχείο με τη σωστή περιγραφή του.","pairs":[["Πρώτος Μεσημβρινός","περνά από το Γκρίνουιτς του Λονδίνου"],["Μεσημβρινός","ημικύκλιο που ενώνει τους δύο πόλους"],["Πόλοι","το βορειότερο και το νοτιότερο άκρο της Γης"],["Ισημερινός","χωρίζει τη Γη σε βόρειο και νότιο ημισφαίριο"]],"explanation":"Ο Πρώτος Μεσημβρινός χωρίζει τη Γη σε ανατολικό και δυτικό ημισφαίριο."},{"id":"k2-q4","type":"tf","prompt":"Ο Ισημερινός χωρίζει τη Γη σε ανατολικό και δυτικό ημισφαίριο.","answer":"Λάθος","explanation":"Ο Ισημερινός χωρίζει τη Γη σε βόρειο και νότιο ημισφαίριο. Το ανατολικό–δυτικό το χωρίζει ο Πρώτος Μεσημβρινός."},{"id":"k2-q5","type":"short","prompt":"Σε ποια ημισφαίρια βρίσκεται η Ελλάδα;","answer":"Η Ελλάδα βρίσκεται στο βόρειο και στο δυτικό ημισφαίριο.","explanation":"Είναι βόρεια του Ισημερινού και δυτικά του Πρώτου Μεσημβρινού."}]},{"id":"k3","title":"Κεφ. 3 – Γεωγραφικές συντεταγμένες","emoji":"📍","color":"#7048e8","blurb":"Γεωγραφικό πλάτος και γεωγραφικό μήκος: πώς βρίσκουμε έναν τόπο στον χάρτη.","questions":[{"id":"k3-q1","type":"mc","prompt":"Οι γεωγραφικές συντεταγμένες ενός τόπου είναι:","options":["το γεωγραφικό πλάτος και το γεωγραφικό ύψος","το γεωγραφικό πλάτος και το γεωγραφικό μήκος","το γεωγραφικό μήκος και το ύψος"],"answer":"το γεωγραφικό πλάτος και το γεωγραφικό μήκος","explanation":"Με τις δύο αυτές τιμές μπορούμε να βρούμε την ακριβή θέση ενός τόπου στον χάρτη."},{"id":"k3-q2","type":"fill","prompt":"Αν μετρήσουμε την απόσταση σε μοίρες ενός παράλληλου κύκλου από τον ______, ορίζουμε το γεωγραφικό ______ ενός τόπου. Αν τη μετρήσουμε από τον ______ ______, ορίζουμε το γεωγραφικό ______.","blanks":["Ισημερινό","πλάτος","Πρώτο Μεσημβρινό","μήκος"],"explanation":"Γεωγραφικό πλάτος + γεωγραφικό μήκος = οι γεωγραφικές συντεταγμένες του τόπου."},{"id":"k3-q3","type":"tf","prompt":"Το γεωγραφικό πλάτος μετριέται σε μοίρες από 0° έως 90° βόρεια ή νότια.","answer":"Σωστό","explanation":"Το γεωγραφικό μήκος μετριέται από 0° έως 180° δυτικά ή ανατολικά."},{"id":"k3-q4","type":"tf","prompt":"Ο Ισημερινός έχει γεωγραφικό πλάτος 0°.","answer":"Σωστό","explanation":"Ο Ισημερινός έχει πλάτος 0°, ενώ ο Πρώτος Μεσημβρινός έχει γεωγραφικό μήκος 0°."},{"id":"k3-q5","type":"think","prompt":"Είσαι πιλότος και θέλεις να πεις στον πύργο ελέγχου την ακριβή θέση του αεροπλάνου. Τι πληροφορίες θα δώσεις και γιατί;","answer":"Θα δώσω τις γεωγραφικές συντεταγμένες του αεροπλάνου: σε πόσες μοίρες γεωγραφικό πλάτος και σε πόσες μοίρες γεωγραφικό μήκος βρίσκεται. Έτσι ο πύργος ελέγχου εντοπίζει με ακρίβεια τη θέση, γιατί το πλάτος και το μήκος ορίζουν ένα μοναδικό σημείο στη Γη.","explanation":"Μία μόνο συντεταγμένη δεν αρκεί — χρειάζονται και το πλάτος και το μήκος."}]},{"id":"k4","title":"Κεφ. 4 – Άξονας, περιστροφή: μέρα & νύχτα","emoji":"🌗","color":"#e8590c","blurb":"Ο άξονας της Γης, η περιστροφή και η εναλλαγή της ημέρας με τη νύχτα.","questions":[{"id":"k4-q1","type":"mc","prompt":"Από τι εξαρτάται η εναλλαγή της ημέρας και της νύχτας;","options":["από την περιφορά της Γης γύρω από τον Ήλιο","από την περιστροφή της Γης γύρω από τον άξονά της","από τη Σελήνη"],"answer":"από την περιστροφή της Γης γύρω από τον άξονά της","explanation":"Καθώς η Γη περιστρέφεται, ο Ήλιος φωτίζει κάθε φορά τη μισή της επιφάνεια."},{"id":"k4-q2","type":"fill","prompt":"Η Γη περιστρέφεται γύρω από τον ______. Δε φωτίζεται ολόκληρη την ίδια ώρα αλλά μόνο η ______. Το μέρος απέναντι από τον Ήλιο έχει ______ ενώ το άλλο μισό έχει ______. Η εναλλαγή ημέρας και νύχτας είναι ______.","blanks":["άξονά της","μισή","μέρα","νύχτα","αδιάκοπη"],"explanation":"Έτσι, η μέρα διαδέχεται αδιάκοπα τη νύχτα σε όλους τους τόπους."},{"id":"k4-q3","type":"tf","prompt":"Η διάρκεια της ημέρας και της νύχτας είναι ίδια σε όλους τους τόπους της Γης.","answer":"Λάθος","explanation":"Η διάρκεια δεν είναι πάντα η ίδια· εξαρτάται από την κλίση του άξονα της Γης και από τον τόπο."},{"id":"k4-q4","type":"tf","prompt":"Η κλίση του άξονα της Γης ευθύνεται και για την εναλλαγή των εποχών.","answer":"Σωστό","explanation":"Η κλίση του νοητού άξονα προκαλεί και τη διαφορετική διάρκεια μέρας/νύχτας και την εναλλαγή των εποχών."},{"id":"k4-q5","type":"think","prompt":"Γιατί δεν έχουμε ταυτόχρονα μέρα σε όλη τη Γη;","answer":"Επειδή η Γη είναι σφαιρική (γεωειδής) και περιστρέφεται γύρω από τον άξονά της. Ο Ήλιος φωτίζει κάθε φορά μόνο τη μισή της επιφάνεια. Έτσι, το φως πέφτει στους τόπους τον έναν μετά τον άλλο: όπου φωτίζεται έχει μέρα, ενώ στο άλλο μισό έχει νύχτα.","explanation":"Η περιστροφή κάνει τη μέρα να διαδέχεται αδιάκοπα τη νύχτα."}]},{"id":"k5","title":"Κεφ. 5 – Περιφορά & εποχές","emoji":"🍂","color":"#f08c00","blurb":"Η περιφορά της Γης, οι εποχές, οι ισημερίες και τα ηλιοστάσια.","questions":[{"id":"k5-q1","type":"mc","prompt":"Από τι εξαρτάται η εναλλαγή των εποχών;","options":["από την απόσταση της Γης από τον Ήλιο","από την κλίση του άξονα της Γης","από τη Σελήνη"],"answer":"από την κλίση του άξονα της Γης","explanation":"Λόγω της κλίσης, άλλοτε στρέφεται προς τον Ήλιο το βόρειο και άλλοτε το νότιο ημισφαίριο."},{"id":"k5-q2","type":"tf","prompt":"Στην εαρινή ισημερία η μέρα έχει την ίδια διάρκεια με τη νύχτα.","answer":"Σωστό","explanation":"Στις ισημερίες (εαρινή και φθινοπωρινή) η μέρα και η νύχτα είναι ίσες."},{"id":"k5-q3","type":"tf","prompt":"Όταν στην Ελλάδα έχουμε χειμώνα, στην Αυστραλία έχουμε καλοκαίρι.","answer":"Σωστό","explanation":"Η Αυστραλία βρίσκεται στο νότιο ημισφαίριο, όπου οι εποχές είναι αντίστροφες από τις δικές μας."},{"id":"k5-q4","type":"fill","prompt":"Το χειμερινό ηλιοστάσιο είναι στις ______ και τότε η νύχτα έχει τη ______ διάρκεια. Το θερινό ηλιοστάσιο είναι στις ______ και τότε η μέρα έχει τη μεγαλύτερη διάρκεια.","blanks":["21 Δεκεμβρίου","μεγαλύτερη","21 Ιουνίου"],"explanation":"Ίση διάρκεια μέρας και νύχτας έχουμε μόνο στην εαρινή και στη φθινοπωρινή ισημερία."},{"id":"k5-q5","type":"think","prompt":"Όταν στην Ελλάδα είναι καλοκαίρι, γιατί στην Αυστραλία έχει χειμώνα; Δώσε ένα παράδειγμα.","answer":"Επειδή η Ελλάδα είναι στο βόρειο ημισφαίριο και η Αυστραλία στο νότιο. Όταν, λόγω της κλίσης του άξονα, το βόρειο ημισφαίριο στρέφεται προς τον Ήλιο (καλοκαίρι), το νότιο απομακρύνεται (χειμώνας). Παράδειγμα: τον Ιούνιο στην Ελλάδα κάνει ζέστη και πάμε στη θάλασσα, ενώ στην Αυστραλία είναι χειμώνας.","explanation":"Οι εποχές στα δύο ημισφαίρια είναι πάντα αντίστροφες."}]},{"id":"k6","title":"Κεφ. 6 – Το ηλιακό μας σύστημα","emoji":"🪐","color":"#0ca678","blurb":"Ο Ήλιος, οι πλανήτες, οι δορυφόροι, τα αυτόφωτα και τα ετερόφωτα σώματα.","questions":[{"id":"k6-q1","type":"mc","prompt":"Πόσοι πλανήτες έχει το ηλιακό μας σύστημα;","options":["7","8","9"],"answer":"8","explanation":"Το ηλιακό μας σύστημα έχει 8 πλανήτες, τους δορυφόρους τους και έναν αστέρα, τον Ήλιο."},{"id":"k6-q2","type":"tf","prompt":"Ο κοντινότερος πλανήτης στον Ήλιο είναι ο Ερμής.","answer":"Σωστό","explanation":"Ο Ερμής είναι ο πιο κοντινός πλανήτης στον Ήλιο και ο μικρότερος σε μέγεθος."},{"id":"k6-q3","type":"tf","prompt":"Η Σελήνη είναι αυτόφωτο σώμα, γιατί έχει δικό της φως.","answer":"Λάθος","explanation":"Η Σελήνη είναι ετερόφωτο σώμα: φωτίζεται από τον Ήλιο. Αυτόφωτο είναι μόνο ο Ήλιος."},{"id":"k6-q4","type":"match","prompt":"Αντιστοίχισε κάθε ουράνιο σώμα με τη σωστή περιγραφή του.","pairs":[["Ήλιος","αστέρας"],["Γη","τρίτος πλανήτης από τον Ήλιο"],["Σελήνη","ο μοναδικός δορυφόρος της Γης"],["Ερμής","ο μικρότερος πλανήτης"]],"explanation":"Αστέρας = σώμα που εκπέμπει φως και θερμότητα· δορυφόρος = σώμα που περιστρέφεται γύρω από πλανήτη."},{"id":"k6-q5","type":"think","prompt":"Ο Ήλιος είναι πλανήτης; Εξήγησε την απάντησή σου.","answer":"Όχι. Ο Ήλιος είναι αστέρας, γιατί εκπέμπει δικό του φως και θερμότητα. Οι πλανήτες (όπως η Γη) δεν έχουν δικό τους φως — είναι ετερόφωτοι και περιστρέφονται γύρω από τον Ήλιο.","explanation":"Γι' αυτό δεν μπορούμε να πούμε τον Ήλιο «τον μεγαλύτερο πλανήτη» του ηλιακού μας συστήματος."}]}]};</script>
+  <script>
+/* Επαναληπτικό τεστ Γεωγραφίας Στ΄ Δημοτικού - λογική διεπαφής.
+   Φορτώνει τις ερωτήσεις από το API (/api/quiz), από αρχείο (./data/questions.json)
+   ή από ενσωματωμένο αντίγραφο (window.__GEO__) στην αυτόνομη έκδοση. */
+
+(function () {
+  "use strict";
+
+  var TYPE_LABEL = {
+    mc: "Πολλαπλής επιλογής",
+    tf: "Σωστό ή Λάθος",
+    fill: "Συμπλήρωση κενών",
+    match: "Αντιστοίχιση",
+    short: "Σύντομη απάντηση",
+    think: "Κριτική σκέψη 🧠"
+  };
+  var TYPE_CLASS = {
+    mc: "badge-mc",
+    tf: "badge-tf",
+    fill: "badge-fill",
+    match: "badge-match",
+    short: "badge-short",
+    think: "badge-think"
+  };
+
+  async function loadQuiz() {
+    if (window.__GEO__) return window.__GEO__;
+    var sources = ["/api/quiz", "./data/questions.json"];
+    for (var i = 0; i < sources.length; i++) {
+      try {
+        var res = await fetch(sources[i], { headers: { Accept: "application/json" } });
+        if (res.ok) return await res.json();
+      } catch (err) { /* δοκίμασε την επόμενη πηγή */ }
+    }
+    throw new Error("Δεν ήταν δυνατή η φόρτωση των ερωτήσεων.");
+  }
+
+  function el(tag, className, text) {
+    var node = document.createElement(tag);
+    if (className) node.className = className;
+    if (text != null) node.textContent = text;
+    return node;
+  }
+
+  var state = { quiz: null, currentId: null };
+
+  function renderHeader(quiz) {
+    if (quiz.unit) document.getElementById("unit-title").textContent = quiz.unit;
+    if (quiz.subtitle) document.getElementById("unit-subtitle").textContent = quiz.subtitle;
+    if (quiz.grade) document.getElementById("grade-badge").textContent = quiz.grade;
+    if (quiz.intro) document.getElementById("intro").textContent = quiz.intro;
+    document.title = "Επαναληπτικό Τεστ – " + (quiz.unit || "Γεωγραφία");
+  }
+
+  function renderNav() {
+    var nav = document.getElementById("topic-nav");
+    nav.textContent = "";
+    state.quiz.topics.forEach(function (topic) {
+      var btn = el("button", "topic-tab");
+      btn.type = "button";
+      btn.style.setProperty("--tab-color", topic.color || "#3b5bdb");
+      btn.appendChild(el("span", "dot"));
+      btn.appendChild(document.createTextNode(topic.emoji + "  " + topic.title));
+      btn.addEventListener("click", function () { selectTopic(topic.id); });
+      nav.appendChild(btn);
+    });
+  }
+
+  function buildAnswer(question) {
+    var box = el("div", "ans-content");
+
+    if (question.type === "mc") {
+      box.appendChild(el("span", "answer-pill ans-correct", question.answer));
+    } else if (question.type === "tf") {
+      var cls = question.answer === "Σωστό" ? "ans-true" : "ans-false";
+      box.appendChild(el("span", "answer-pill " + cls, question.answer));
+    } else if (question.type === "fill") {
+      var list = el("ol", "ans-list");
+      (question.blanks || []).forEach(function (b) { list.appendChild(el("li", null, b)); });
+      box.appendChild(list);
+    } else if (question.type === "match") {
+      (question.pairs || []).forEach(function (pair) {
+        var row = el("div", "match-pair");
+        row.appendChild(el("span", "tag tag-a", pair[0]));
+        row.appendChild(el("span", "arrow", "→"));
+        row.appendChild(el("span", "tag tag-b", pair[1]));
+        box.appendChild(row);
+      });
+    } else {
+      box.appendChild(el("div", "ans-text", question.answer));
+    }
+
+    if (question.explanation) box.appendChild(el("p", "q-explanation", question.explanation));
+    return box;
+  }
+
+  function buildCard(question, index) {
+    var li = el("li", "q-card");
+    li.dataset.id = question.id;
+    li.dataset.type = question.type;
+
+    var toggle = el("button", "q-toggle");
+    toggle.type = "button";
+    toggle.setAttribute("aria-expanded", "false");
+    toggle.appendChild(el("span", "q-number", String(index + 1)));
+
+    var body = el("div", "q-body");
+    var badges = el("div", "q-badges");
+    badges.appendChild(el("span", "badge " + (TYPE_CLASS[question.type] || "badge-tf"),
+      TYPE_LABEL[question.type] || "Ερώτηση"));
+    body.appendChild(badges);
+    body.appendChild(el("div", "q-prompt", question.prompt));
+    body.appendChild(el("div", "q-hint", "Πάτησε για την απάντηση"));
+    toggle.appendChild(body);
+    toggle.appendChild(el("span", "q-chevron", "\u25be"));
+
+    var answerWrap = el("div", "q-answer");
+    var inner = el("div", "q-answer-inner");
+    inner.appendChild(buildAnswer(question));
+    answerWrap.appendChild(inner);
+
+    toggle.addEventListener("click", function () {
+      li.classList.toggle("open");
+      toggle.setAttribute("aria-expanded", li.classList.contains("open") ? "true" : "false");
+      updateCounter();
+    });
+
+    li.appendChild(toggle);
+    li.appendChild(answerWrap);
+    return li;
+  }
+
+  function updateCounter() {
+    var cards = document.querySelectorAll("#question-list .q-card");
+    var open = document.querySelectorAll("#question-list .q-card.open").length;
+    document.getElementById("counter").textContent =
+      cards.length + " ερωτήσεις \u00b7 " + open + " ανοιχτές";
+  }
+
+  function renderTopic(topic) {
+    var panel = document.getElementById("topic-panel");
+    panel.style.setProperty("--accent", topic.color || "#3b5bdb");
+    panel.querySelector(".topic-head").style.borderLeftColor = topic.color || "#3b5bdb";
+    document.getElementById("topic-emoji").textContent = topic.emoji || "";
+    document.getElementById("topic-title").textContent = topic.title;
+    document.getElementById("topic-blurb").textContent = topic.blurb || "";
+
+    var list = document.getElementById("question-list");
+    list.textContent = "";
+    topic.questions.forEach(function (q, i) { list.appendChild(buildCard(q, i)); });
+    updateCounter();
+  }
+
+  function setActiveTab(id) {
+    document.querySelectorAll(".topic-tab").forEach(function (tab, i) {
+      tab.setAttribute("aria-current", state.quiz.topics[i].id === id ? "true" : "false");
+    });
+  }
+
+  function selectTopic(id, opts) {
+    var topic = state.quiz.topics.find(function (t) { return t.id === id; }) || state.quiz.topics[0];
+    state.currentId = topic.id;
+    renderTopic(topic);
+    setActiveTab(topic.id);
+    if (!opts || !opts.keepScroll) window.scrollTo({ top: 0, behavior: "smooth" });
+    if (history.replaceState) history.replaceState(null, "", "#" + topic.id);
+  }
+
+  function setAll(open) {
+    document.querySelectorAll("#question-list .q-card").forEach(function (card) {
+      card.classList.toggle("open", open);
+      card.querySelector(".q-toggle").setAttribute("aria-expanded", open ? "true" : "false");
+    });
+    updateCounter();
+  }
+
+  function wireToolbar() {
+    document.getElementById("reveal-all").addEventListener("click", function () { setAll(true); });
+    document.getElementById("hide-all").addEventListener("click", function () { setAll(false); });
+  }
+
+  async function init() {
+    try {
+      state.quiz = await loadQuiz();
+    } catch (err) {
+      document.getElementById("intro").textContent =
+        "Λυπούμαστε, οι ερωτήσεις δεν φορτώθηκαν. Ανανέωσε τη σελίδα.";
+      console.error(err);
+      return;
+    }
+    renderHeader(state.quiz);
+    renderNav();
+    wireToolbar();
+    var startId = (location.hash || "").replace("#", "") || state.quiz.topics[0].id;
+    selectTopic(startId, { keepScroll: true });
+  }
+
+  document.addEventListener("DOMContentLoaded", init);
+})();
+
+  </script>
+</body>
+</html>
